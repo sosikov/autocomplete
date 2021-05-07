@@ -31,6 +31,7 @@ class AutoComplete extends Component {
 
     this.inputRef = React.createRef()
     this.wrapperRef = React.createRef()
+    this.anchorRef = React.createRef()
   }
 
   componentDidUpdate(_prevProps, prevState) {
@@ -62,6 +63,10 @@ class AutoComplete extends Component {
             error: true,
           })
         })
+    }
+
+    if (this.state.focused !== null && this.anchorRef.current) {
+      this.anchorRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
 
     if (this.state.selected && prevState.selected !== this.state.selected) {
@@ -219,6 +224,7 @@ class AutoComplete extends Component {
                   return (
                     <li
                       key={option.code}
+                      ref={index === this.state.focused ? this.anchorRef : null}
                       className={this.getClasses(index)}
                       onMouseDown={this.handleSelect(option)}
                       dangerouslySetInnerHTML={this.highlight(option.name)}
