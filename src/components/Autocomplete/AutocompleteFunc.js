@@ -16,6 +16,7 @@ const Autocomplete = memo(({ label, getOptions, onChange }) => {
 
   const inputRef = useRef(null)
   const wrapperRef = useRef(null)
+  const anchorRef = useRef(null)
 
   const handleChange = ({ target: { value } }) => {
     if (!value) {
@@ -87,6 +88,10 @@ const Autocomplete = memo(({ label, getOptions, onChange }) => {
             error: true,
           })
         })
+    }
+
+    if (state.focused !== null && anchorRef.current) {
+      anchorRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
   }, [state, getOptions, getCached])
 
@@ -212,6 +217,7 @@ const Autocomplete = memo(({ label, getOptions, onChange }) => {
                 return (
                   <li
                     key={option.code}
+                    ref={index === state.focused ? anchorRef : null}
                     className={getClasses(index)}
                     onMouseDown={handleSelect(option)}
                     dangerouslySetInnerHTML={highlight(option.name)}
