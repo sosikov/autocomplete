@@ -12,6 +12,7 @@ In this project i did:
 - added click outside (when options expanded) via blur
 - did not use libraries
 
+
 If you want run this project:
 - npm i
 - npm start
